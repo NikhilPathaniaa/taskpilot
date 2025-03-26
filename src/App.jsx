@@ -1,38 +1,36 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
+  const [status, setStatus] = useState("low");
 
   const addTask = (e) => {
     e.preventDefault();
     if (task.trim() === "") return;
-    setTasks([...tasks, task]);
+    setTasks([...tasks, { text: task, status }]); // Store task and status together
     setTask(""); // Clear input after adding
+    setStatus("low"); // Reset status
   };
 
   return (
     <div>
-      <h1>hi</h1>
       <h1>Add task</h1>
-      <form>
-        <select>
-          <option>low</option>
-          <option>medium</option>
-          <option>high</option>
+      <form onSubmit={addTask}>
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
         </select>
         <input type="text" placeholder="Add task" value={task} onChange={(e) => setTask(e.target.value)} />
-        <button onClick={addTask} className="mt-2 p-2 bg-blue-500 text-white rounded w-full">
-          Add Task
-        </button>
+        <button type="submit">Add Task</button>
       </form>
 
       <h1>Task List</h1>
       <ul>
         {tasks.map((t, index) => (
-          <li key={index} className="border p-2 rounded mb-1">
-            {t}
+          <li key={index}>
+            ({t.status}) {t.text}
           </li>
         ))}
       </ul>
