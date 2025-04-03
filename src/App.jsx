@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import Counter from "./components/Counter";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
   const [status, setStatus] = useState("low");
+  const [checked, setChecked] = useState(false);
 
   const addTask = (e) => {
     e.preventDefault();
@@ -13,6 +15,10 @@ const App = () => {
     setStatus("low"); // Reset status
   };
 
+  const onChange = (e) => {
+    setChecked(e.target.checked);
+  };
+  console.log("checked", checked);
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen">
       <h1>Add task</h1>
@@ -33,23 +39,28 @@ const App = () => {
       <h1>Task List</h1>
       <ul>
         {tasks.map((t, index) => (
-          <li key={index}>
-            {t.status == "low" ? (
-              <p className="text-green-500">
-                ({t.status}) {t.text}
-              </p>
-            ) : t.status == "medium" ? (
-              <p className="text-orange-500">
-                ({t.status}) {t.text}
-              </p>
-            ) : (
-              <p className="text-red-500">
-                ({t.status}) {t.text}
-              </p>
-            )}
+          <li key={index} className="flex items-center gap-2">
+            <input type="checkbox" value={checked} onClick={onChange} />
+            <label>
+              {t.status == "low" ? (
+                <p className={` ${checked ? "line-through text-gray-500" : "text-green-500"}`}>
+                  ({t.status}) {t.text}
+                </p>
+              ) : t.status == "medium" ? (
+                <p className={` ${checked ? "line-through text-gray-500" : "text-orange-500"}`}>
+                  ({t.status}) {t.text}
+                </p>
+              ) : (
+                <p className={` ${checked ? "line-through text-gray-500" : "text-red-500"}`}>
+                  ({t.status}) {t.text}
+                </p>
+              )}
+            </label>
           </li>
         ))}
       </ul>
+
+      <Counter />
     </div>
   );
 };
