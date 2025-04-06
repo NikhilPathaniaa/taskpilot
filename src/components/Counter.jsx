@@ -46,12 +46,23 @@ const Counter = () => {
   const handleItalic = () => {
     document.execCommand("italic", false, null);
   };
-
+  const handleFontSize = () => {
+    document.execCommand("fontSize", false, 5);
+  };
+  const HandleUnderline = () => {
+    document.execCommand("underline", false, null);
+  };
+  const HandleStrikeThrough = () => {
+    document.execCommand("strikeThrough");
+  };
+  const HandleforeColor = () => {
+    document.execCommand("foreColor", false, "#00000");
+  };
   // ========================================
   return (
     <div className="relative  w-[100%] h-[100%] overflow-hidden" onMouseMove={handleMouseMove} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div id="joke" className="p-4">
-        <h1 className="text-2xl font-bold mt-9 mb-4">🤪Random Joke😆</h1>
+        <h1 className="text-2xl font-bold mb-4">🤪Random Joke😆</h1>
         <p className="text-2xl font-mono">{joke}</p>
       </div>
 
@@ -70,7 +81,7 @@ const Counter = () => {
         🖱 Mouse Position: X: {mouseX}, Y: {mouseY}
       </h2>
       {/* Notes Editor */}
-      <div className="w-full flex flex-col items-center justify-center px-4 py-10">
+      <div className="w-full flex flex-col items-center justify-center px-4 py-7">
         <h1 className="text-2xl font-mono mb-4">📝 Notes</h1>
 
         {/* Toolbar */}
@@ -78,8 +89,20 @@ const Counter = () => {
           <button onClick={handleBold} className="px-4 py-2 cursor-pointer rounded-md hover:bg-gray-200 transition duration-200 ease-in-out">
             <p className="font-bold text-black">B</p>
           </button>
-          <button onClick={handleItalic} className="px-4 py-2 cursor-pointer rounded-md hover:bg-gray-200 transition duration-200 ease-in-out">
+          <button onClick={handleItalic} className="px-4 py-2  cursor-pointer rounded-md hover:bg-gray-200 transition duration-200 ease-in-out">
             <p className=" italic text-black">I</p>
+          </button>
+          <button onClick={handleFontSize} className="px-4 py-2  cursor-pointer rounded-md hover:bg-gray-200 transition duration-200 ease-in-out">
+            <p className=" text-black">h1</p>
+          </button>
+          <button onClick={HandleUnderline} className="px-4 py-2  cursor-pointer rounded-md hover:bg-gray-200 transition duration-200 ease-in-out">
+            <p className=" underline text-black">U</p>
+          </button>
+          <button onClick={HandleStrikeThrough} className="px-4 py-2  cursor-pointer rounded-md hover:bg-gray-200 transition duration-200 ease-in-out">
+            <p className=" line-through text-black">P</p>
+          </button>
+          <button onClick={HandleforeColor} className="px-4 py-2  cursor-pointer rounded-md hover:bg-gray-200 transition duration-200 ease-in-out">
+            <p>🖤</p>
           </button>
         </div>
 
