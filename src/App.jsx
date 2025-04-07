@@ -16,8 +16,9 @@ const NavigationTabs = () => {
   };
 
   useEffect(() => {
-    setSpace(calculateStorage());
-
+    const updateSpace = () => {
+      setSpace(calculateStorage());
+    };
     const interval = setInterval(updateSpace, 1000);
     return () => clearInterval(interval); // cleanup on unmount
   }, []);
@@ -44,6 +45,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/sticky-note" element={<SticyNote />} />
+        <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
     </BrowserRouter>
   );
