@@ -9,7 +9,7 @@ const Main = () => {
 
   const addTask = (e) => {
     e.preventDefault();
-    if (task.trim() === "") return;
+    if (task.trim() === "") return; // bank input egnored
     setTasks([...tasks, { text: task, status, checked: false }]); // Store task and status together
     setTask(""); // Clear input after adding
     setStatus("low"); // Reset status
@@ -19,6 +19,12 @@ const Main = () => {
     const updatedTasks = [...tasks];
     updatedTasks[index].checked = !updatedTasks[index].checked;
     setTasks(updatedTasks);
+  };
+
+  const HandleRemoveTask = (index) => {
+    const removeTask = [...tasks];
+    removeTask.splice(index, 1); // Remove task at index
+    setTasks(removeTask); // Update tasks state
   };
   return (
     <div className="bg-linear-30 from-blue-50 from-20% to-100% to-blue-200 flex  items-center justify-between p-5 h-screen w-screen">
@@ -52,6 +58,9 @@ const Main = () => {
                   ({t.status}) {t.text}
                 </p>
               </label>
+              <button onClick={HandleRemoveTask} className="text-red-500 hover:text-red-700 font-bold py-2 px-4 rounded-xl">
+                Remove
+              </button>
             </li>
           ))}
         </ul>
