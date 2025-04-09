@@ -5,20 +5,21 @@ const Main = () => {
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
   const [status, setStatus] = useState("low");
-  const [checked, setChecked] = useState(false);
+  const checked = false;
 
   const addTask = (e) => {
     e.preventDefault();
     if (task.trim() === "") return;
-    setTasks([...tasks, { text: task, status }]); // Store task and status together
+    setTasks([...tasks, { text: task, status, checked: false }]); // Store task and status together
     setTask(""); // Clear input after adding
     setStatus("low"); // Reset status
   };
 
-  const onChange = (e) => {
-    setChecked(e.target.checked);
+  const toggleTask = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].checked = !updatedTasks[index].checked;
+    setTasks(updatedTasks);
   };
-  console.log("checked", checked);
   return (
     <div className="bg-linear-30 from-blue-50 from-20% to-100% to-blue-200 flex  items-center justify-between p-5 h-screen w-screen">
       <Counter />
@@ -45,21 +46,11 @@ const Main = () => {
         <ul>
           {tasks.map((t, index) => (
             <li key={index} className="flex items-center gap-2">
-              <input type="checkbox" value={checked} onClick={onChange} />
+              <input type="checkbox" checked={t.checked} onChange={() => toggleTask(index)} />
               <label>
-                {t.status == "low" ? (
-                  <p className={` ${checked ? "line-through text-gray-500" : "text-green-500"}`}>
-                    ({t.status}) {t.text}
-                  </p>
-                ) : t.status == "medium" ? (
-                  <p className={` ${checked ? "line-through text-gray-500" : "text-orange-500"}`}>
-                    ({t.status}) {t.text}
-                  </p>
-                ) : (
-                  <p className={` ${checked ? "line-through text-gray-500" : "text-red-500"}`}>
-                    ({t.status}) {t.text}
-                  </p>
-                )}
+                <p className={`${t.checked ? "line-through text-gray-500" : t.status === "low" ? "text-green-500" : t.status === "medium" ? "text-orange-500" : "text-red-500"}`}>
+                  ({t.status}) {t.text}
+                </p>
               </label>
             </li>
           ))}
