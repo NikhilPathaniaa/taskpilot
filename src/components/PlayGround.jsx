@@ -4,7 +4,9 @@ import React, { use, useState } from "react";
 const PlayGround = () => {
   const [array, setArray] = useState([]);
   const [val, setVal] = useState(1);
-  const [filterVal, setFilterVal] = useState(0);
+  const [filterVal, setFilterVal] = useState("");
+  const [indexVal, setIndexVal] = useState("");
+  const [removeVal, setRemoveVal] = useState("");
 
   const add = () => {
     setArray([...array, val]);
@@ -27,13 +29,33 @@ const PlayGround = () => {
   const reset = () => {
     setArray([]);
     setVal(1);
+    setFilterVal("");
+    setRemoveVal("");
   };
-  const HandleFilter = (value) => {
+  const HandleFilter = () => {
+    let flag = false;
     for (let i = 0; i < array.length; i++) {
-      if (filterVal == array[i]) {
-        console.log(filterVal);
+      if (array[i] == filterVal) {
+        console.log(i);
+        setIndexVal(i);
+        flag = true;
+        break;
       }
-      setFilterVal(filterVal + 1);
+    }
+    if (!flag) {
+      setIndexVal("Not present");
+    }
+  };
+  const HandleFilterRemove = () => {
+    const numToRemove = parseInt(removeVal, 10); // converting from string to number
+    const updatedArray = array.filter((item) => item !== numToRemove);
+    setArray(updatedArray);
+    setRemoveVal("");
+    if (numToRemove != array.length) {
+      setVal(val - 1);
+    }
+    if (numToRemove == array.length) {
+      setVal(val - 1);
     }
   };
   return (
@@ -53,22 +75,42 @@ const PlayGround = () => {
         <div className="flex items-center gap-3 bg-white p-3 rounded-xl shadow-md">
           <input
             onChange={(e) => {
-              e.target.value;
+              setFilterVal(e.target.value);
             }}
+            value={filterVal}
             type="number"
             placeholder="Enter value"
             className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          <button onClick={HandleFilter(filterVal)} className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-200">
+          <button onClick={HandleFilter} className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-200">
             <FunnelIcon className="h-5 w-5" />
             Filter
+          </button>
+        </div>
+        <div className="flex items-center gap-3 bg-white p-3 rounded-xl shadow-md">
+          <input
+            onChange={(e) => {
+              setRemoveVal(e.target.value);
+            }}
+            value={removeVal}
+            type="number"
+            placeholder="Enter value"
+            className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <button onClick={HandleFilterRemove} className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-200">
+            <FunnelIcon className="h-5 w-5" />
+            Filter Remove
           </button>
         </div>
       </div>
 
       <div className=" text-center text-lg">
         <p className="font-mono tracking-wider">[{array.join(", ")}]</p>
-        <p>filter Value = {filterVal}</p>
+        {filterVal >= 1 && (
+          <p>
+            filter Value = {filterVal} <br /> filter Index = {indexVal}
+          </p>
+        )}
       </div>
     </div>
   );
