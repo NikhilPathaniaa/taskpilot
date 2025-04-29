@@ -8,12 +8,16 @@ const LineChart = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Count changed:", count);
+    const handleResize = () => {
+      console.log("Window resized");
+    };
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      console.log("Component will UNMOUNT 💀");
+      window.removeEventListener("resize", handleResize);
+      console.log("Window event listener removed");
     };
-  }, [count]);
+  }, []);
 
   return (
     <div>

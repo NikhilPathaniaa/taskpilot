@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const NoteLayout = ({ id, note, onRemove, onUpdate }) => {
+const NoteLayout = ({ id, note, onRemove, onUpdate, setActiveCard }) => {
   const handleInput = (e) => {
     onUpdate(id, { ...note, text: e.target.value });
   };
@@ -9,7 +9,7 @@ const NoteLayout = ({ id, note, onRemove, onUpdate }) => {
     onUpdate(id, { ...note, color: e.target.value });
   };
   return (
-    <div>
+    <div draggable onDragStart={() => setActiveCard(id)} onDragEnd={() => setActiveCard(null)}>
       <div className="flex items-center justify-between rounded-lg shadow-md mb-1 p-2">
         <select value={note.color} onChange={handleColorChange} className="border-2 border-blue-300 rounded-xl h-10">
           <option value="yellow" className="flex items-center justify-center">
@@ -36,6 +36,8 @@ const SticyNote = () => {
     const saved = localStorage.getItem("sticky-notes");
     return saved ? JSON.parse(saved) : [];
   });
+  const [activeCard, setActiveCard] = useState(null);
+  const [showDrop, setShowDrop] = useState(false);
 
   const handleAddNote = () => {
     const id = Date.now(); // unique id
@@ -63,7 +65,7 @@ const SticyNote = () => {
 
   console.log("notes", notes);
   return (
-    <div>
+    <div onDragEnter={() => setShowDrop(true)} onDragLeave={() => setShowDrop(false)}>
       <div className="text-center text-xl font-mono bg-yellow-100 p-8 rounded-xl shadow-lg">
         <p>🗒️ This is the Sticky Note Tab!</p>
         <button onClick={handleAddNote} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition duration-200 ease-in-out">
@@ -73,9 +75,10 @@ const SticyNote = () => {
 
       <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
         {notes.map((note) => (
-          <NoteLayout key={note.id} id={note.id} note={note} onRemove={handleRemoveNote} onUpdate={handleUpdateNote} />
+          <NoteLayout key={note.id} setActiveCard={setActiveCard} id={note.id} note={note} onRemove={handleRemoveNote} onUpdate={handleUpdateNote} />
         ))}
       </div>
+      <h1>active card - {activeCard}</h1>
     </div>
   );
 };
