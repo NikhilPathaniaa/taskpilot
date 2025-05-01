@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FaPause, FaPlay } from "react-icons/fa6";
 import { RiResetRightFill } from "react-icons/ri";
+import StopWatch from "./StopWatch";
 
 const FocusTime = () => {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
   const [tab, setTab] = useState(0);
   const [timerStart, setTimerStart] = useState(true);
-  console.log(timerStart);
+
 
   useEffect(() => {
     if (!timerStart) {
@@ -73,7 +74,7 @@ const FocusTime = () => {
           </div>
         </div>
       )}
-      {tab == 1 && <div></div>}
+      {tab == 1 && <div><StopWatch/></div>}
     </div>
   );
 };

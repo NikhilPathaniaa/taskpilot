@@ -13,14 +13,12 @@ const PlayGround = () => {
   const add = () => {
     setArray([...array, val]);
     setVal(val + 1);
-    console.log(array);
   };
   const remove = () => {
     if (array.length !== 0) {
       const newArray = [...array]; // make a copy
       newArray.pop(); // safely mutate the copy
       setArray(newArray);
-      console.log(newArray);
     }
     if (array.length === 0) {
       setVal(1);
@@ -82,7 +80,6 @@ const PlayGround = () => {
       }
     }
     setArray([...arr]);
-    console.log(array);
   };
   return (
     <div>

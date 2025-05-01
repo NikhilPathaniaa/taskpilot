@@ -63,7 +63,6 @@ const SticyNote = () => {
     localStorage.setItem("sticky-notes", JSON.stringify(notes));
   }, [notes]);
 
-  console.log("notes", notes);
   return (
     <div onDragEnter={() => setShowDrop(true)} onDragLeave={() => setShowDrop(false)}>
       <div className="text-center text-xl font-mono bg-yellow-100 p-8 rounded-xl shadow-lg">
