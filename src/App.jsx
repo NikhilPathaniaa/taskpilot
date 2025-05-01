@@ -26,7 +26,6 @@ const NavigationTabs = () => {
     return () => clearInterval(interval); // cleanup on unmount
   }, []);
 
-  console.log(`Approx localStorage size: } KB`);
   return (
     <div className="flex justify-center gap-4 bg-white shadow-md p-4">
       <NavLink to="/" end className={({ isActive }) => `text-lg font-medium ${isActive ? "text-blue-900 underline" : "text-blue-700 hover:underline"}`}>
