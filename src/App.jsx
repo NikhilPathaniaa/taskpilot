@@ -5,6 +5,7 @@ import SticyNote from "./components/SticyNote";
 import PlayGround from "./components/PlayGround";
 import FocusTime from "./components/FocusTime";
 import LineChart from "./components/LineChart";
+import Promodoro from "./components/pomodoro/Promodoro";
 const NavigationTabs = () => {
   const [space, setSpace] = useState(0);
 
@@ -41,7 +42,10 @@ const NavigationTabs = () => {
         Focus Time
       </NavLink>
       <NavLink to="/line-chart" className={({ isActive }) => `text-lg font-medium ${isActive ? "text-blue-900 underline" : "text-blue-700 hover:underline"}`}>
-        Line Chart
+        Live Chat
+      </NavLink>
+      <NavLink to="/promodoro" className={({ isActive }) => `text-lg font-medium ${isActive ? "text-blue-900 underline" : "text-blue-700 hover:underline"}`}>
+        Promodoro
       </NavLink>
       <div className="absolute right-4 top-4 bg-gray-200 text-sm p-2 rounded-lg shadow-md">
         <p>LocalStorage Size: {space} KB</p>
@@ -59,6 +63,7 @@ const App = () => {
         <Route path="/playground" element={<PlayGround />} />
         <Route path="/focus-time" element={<FocusTime />} />
         <Route path="/line-chart" element={<LineChart />} />
+        <Route path="/promodoro" element={<Promodoro />} />
         <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
     </BrowserRouter>
