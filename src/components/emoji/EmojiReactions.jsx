@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 
 const EmojiReactions = (props) => {
   const emoji = ["🥰", "🫡", "🤪", "😎", "🤑"];
@@ -42,7 +42,7 @@ const EmojiReactions = (props) => {
   useEffect(() => {
     // You can handle side effects like logging or others here if necessary
   }, [count]);
-
+  console.log("work");
   return (
     <div>
       {onHover && (
@@ -68,9 +68,11 @@ const EmojiReactions = (props) => {
             )
         )}
       </div>
-      <button onClick={()=> props.reset(2)} className="cursor-pointer text-2xl">Reset</button>
+      <button onClick={() => props.reset(2)} className="cursor-pointer text-2xl">
+        Reset
+      </button>
     </div>
   );
 };
 
-export default EmojiReactions;
+export default memo(EmojiReactions);
