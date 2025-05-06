@@ -1,27 +1,41 @@
 import React, { useState } from "react";
-import { FaCirclePlus, FaPen } from "react-icons/fa6";
-import TaskList from "./TaskList";
-import { MdDelete } from "react-icons/md";
-import { HiDotsVertical } from "react-icons/hi";
+import { FaCirclePlus, FaEye } from "react-icons/fa6";
 import AddTaskPopup from "./AddTaskPopup";
+import TaskList from "./TaskList";
+import ViewTaskPopup from "./ViewTaskPopup";
 
 const Promodoro = () => {
   const [taskList, setTaskList] = useState<String[]>([]);
-  const [task, setTask] = useState("");
   const [showAdd, setShowAdd] = useState(false);
+  const [showTaskData, setShowTaskData] = useState(false);
+  const [viewData, setViewData] = useState("");
+  const [index, setIndex] = useState(0);
+  
+  const handleAddTask = (newTask:String) => {
+    if (newTask.length > 0 && newTask !== "  ") {     
+      setTaskList([...taskList, newTask ]);
+    }
+    setShowAdd(false);
+  };
 
-  const handleAddTask = () => {
-    setShowAdd(true);
-    if (task.length > 0 && task !== "  ") {
-      const tempTask = task;
-      setTaskList([...taskList, tempTask]);
-      setTask("");
+  const handleViewTask = (index: any) => {
+    setShowTaskData(true)
+    setViewData(`${taskList[index]}`)
+    setIndex(index)
+    console.log(taskList[index]);
+  };
+
+  const handleUpdateTask = (newTask:String, index: any) => {
+    console.log("trigger",newTask)
+    if (newTask.trim().length > 0) {
+      const updatedList = taskList.map((task, i) =>
+        i === index ? newTask : task
+      );
+      setTaskList(updatedList);
     }
   };
+  
 
-  const handleEditTask = (index: any) => {
-    console.log(index);
-  };
   const handleDeleteTask = (index: any) => {
     const removeTask = [...taskList];
     removeTask.splice(index, 1); // Remove task at index
@@ -32,26 +46,24 @@ const Promodoro = () => {
   };
   return (
     <div>
-      <button onClick={handleAddTask} className="flex font-bold text-gray-600 cursor-pointer gap-3 items-center justify-center bg-gray-100 border-2 border-gray-400 rounded-xl border-dashed h-14 w-[20vw]">
+      <button onClick={() => setShowAdd(true)} className="flex font-bold text-gray-600 cursor-pointer gap-3 items-center justify-center bg-gray-100 border-2 border-gray-400 rounded-xl border-dashed h-14 w-[20vw]">
         <FaCirclePlus />
         Add Task
       </button>
       <div className="my-4">
         {taskList.map((item, index) => (
-          <div key={index} className="flex items-center pl-3 justify-between border-1 border-gray-400 rounded-xl  h-8 w-[20vw]">
+          <div key={index} className={`flex items-center pl-3 justify-between border-1 border-gray-400 rounded-xl  h-8 w-[20vw]`}>
             {item}
             <div>
-              <button onClick={() => handleEditTask(index)} className="text-gray-600 mr-2 cursor-pointer">
-                <FaPen />
-              </button>
-              <button onClick={() => handleDeleteTask(index)} className="text-gray-600 cursor-pointer">
-                <MdDelete />
+              <button onClick={() => handleViewTask(index)} className="text-gray-600 cursor-pointer pr-2">
+              <FaEye />
               </button>
             </div>
           </div>
         ))}
       </div>
       {showAdd && <AddTaskPopup close={close} handleAddTask={handleAddTask} />}
+      {showTaskData && <ViewTaskPopup handleUpdateTask={handleUpdateTask} index={index} handleDeleteTask={handleDeleteTask} viewData={taskList[index]} setShowTaskData={setShowTaskData} close={close}/>}
       <TaskList handleAddTask={handleAddTask} />
     </div>
   );

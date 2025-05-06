@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const AddTaskPopup = (props: any) => {
   const [task, setTask] = useState("");
-
+  console.log("add task")
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
       <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-6">
@@ -14,8 +14,8 @@ const AddTaskPopup = (props: any) => {
           </button>
           <button
             onClick={() => {
-              // Save logic here
-              //   close();
+              props.handleAddTask(task)
+              setTask("")
             }}
             className="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white">
             Save
